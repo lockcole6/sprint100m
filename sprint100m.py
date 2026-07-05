@@ -24,8 +24,9 @@ NUM_LANES = 4
 TRACK_BOT = TRACK_TOP + LANE_H * NUM_LANES   # 110
 
 # --- stride (rhythm) bar -----------------------------------------------
-BAR_W, BAR_H = 140, 10
-BAR_X, BAR_Y = (W - BAR_W) // 2, H - 18
+# raised into the grass just below the track to keep the runner in view
+BAR_W, BAR_H = 140, 14
+BAR_X, BAR_Y = (W - BAR_W) // 2, 122
 GOOD_A, GOOD_B = 0.55, 1.0       # good window (cursor 0..1)
 PERF_A, PERF_B = 0.72, 0.95      # perfect window (widened)
 MARV_A, MARV_B = 0.795, 0.875    # marvelous: small sweet spot in the center
@@ -708,7 +709,7 @@ class Sprint:
         pyxel.text(W - 44, 30, f"{p.speed * 3.6:3.0f}km/h", 5)
 
         if self.combo >= 2:
-            pyxel.text(BAR_X + BAR_W // 2 - 14, BAR_Y - 9,
+            pyxel.text(BAR_X + BAR_W // 2 - 14, BAR_Y + BAR_H + 6,
                        f"COMBO x{self.combo}", 10)
 
         self._draw_stride_bar()
@@ -725,7 +726,8 @@ class Sprint:
             pyxel.rectb(BAR_X - 2, BAR_Y - 2, BAR_W + 4, BAR_H + 4,
                         8 if (hot and blink) else 2)
             msg = "DON'T PRESS!" if hot else "HANDS OFF..."
-            pyxel.text(BAR_X + BAR_W // 2 - len(msg) * 2, BAR_Y + 3,
+            pyxel.text(BAR_X + BAR_W // 2 - len(msg) * 2,
+                       BAR_Y + (BAR_H - 5) // 2,
                        msg, 7 if (hot and blink) else 8)
             return
 
@@ -735,7 +737,8 @@ class Sprint:
             pyxel.rect(BAR_X - 1, BAR_Y - 1, BAR_W + 2, BAR_H + 2, 0)
             pyxel.rect(BAR_X, BAR_Y, BAR_W, BAR_H, 10 if hot else 9)
             msg = "PUSH!!!"
-            pyxel.text(BAR_X + BAR_W // 2 - len(msg) * 2, BAR_Y + 3,
+            pyxel.text(BAR_X + BAR_W // 2 - len(msg) * 2,
+                       BAR_Y + (BAR_H - 5) // 2,
                        msg, 0 if hot else 7)
             pyxel.rectb(BAR_X - 2, BAR_Y - 2, BAR_W + 4, BAR_H + 4,
                         7 if hot else 10)
